@@ -4,6 +4,10 @@ node_modules/
 build/
 temp/
 
+.env
+
+src/database/database.sqlite
+
 tmp/*
 !tmp/.gitkeep
 
