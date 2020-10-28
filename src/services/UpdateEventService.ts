@@ -5,40 +5,48 @@ import EventsRepository from '../repositories/EventsRepository';
 import AppError from '../errors/AppError';
 
 interface RequestDTO {
+  postId: string;
   description: string;
   userId: string;
   toDate: Date;
   fromDate: Date;
 }
 
-class CreateEventService {
+class UpdateEventService {
   public async execute({
+    postId,
     description,
-    userId,
-    toDate,
     fromDate,
+    toDate,
+    userId,
   }: RequestDTO): Promise<Event> {
     const eventsRepository = getCustomRepository(EventsRepository);
-    const findEventInSameDate = await eventsRepository.findByDate(
-      fromDate,
+    const findEventOtherInSameDate = await eventsRepository.findByDateUpdate(
       toDate,
+      fromDate,
       userId,
+      postId,
     );
 
-    if (findEventInSameDate) {
+    if (findEventOtherInSameDate) {
       throw new AppError('This event is already booked');
     }
 
-    const event = eventsRepository.create({
-      description,
-      userId,
-      fromDate,
-      toDate,
+    const event = await eventsRepository.findOne({
+      where: { id: postId, userId },
     });
+    if (!event) {
+      throw new AppError('This Event does not exist');
+    }
+
+    event.fromDate = fromDate;
+    event.toDate = toDate;
+    event.description = description;
+
     await eventsRepository.save(event);
 
     return event;
   }
 }
 
-export default CreateEventService;
+export default UpdateEventService;

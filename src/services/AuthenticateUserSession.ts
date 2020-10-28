@@ -19,7 +19,6 @@ interface ResponseDTO {
 class AuthenticateUserSession {
   public async execute({ email, password }: RequestDTO): Promise<ResponseDTO> {
     const usersRepository = getRepository(User);
-    console.log(process.env.SECRET_MD5);
 
     const user = await usersRepository.findOne({ where: { email } });
 
@@ -36,7 +35,7 @@ class AuthenticateUserSession {
     const { expiresIn } = authConfig.jwt;
 
     const token = sign({}, process.env.SECRET_MD5, {
-      subject: String(user.id),
+      subject: user.id,
       expiresIn,
     });
 

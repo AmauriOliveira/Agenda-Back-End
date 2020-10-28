@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEvent1603735972043 implements MigrationInterface {
+export default class CreateEvent1603735984049 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -8,27 +8,26 @@ export default class CreateEvent1603735972043 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'integer',
-            unsigned: true,
+            type: 'uuid',
             isPrimary: true,
-            isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'description',
             type: 'text',
           },
           {
-            name: 'from',
-            type: 'integer',
+            name: 'fromDate',
+            type: 'timestamp with time zone',
           },
           {
-            name: 'to',
-            type: 'integer',
+            name: 'toDate',
+            type: 'timestamp with time zone',
           },
           {
             name: 'userId',
-            type: 'integer',
+            type: 'uuid',
           },
         ],
         foreignKeys: [
