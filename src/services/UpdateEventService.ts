@@ -27,8 +27,9 @@ class UpdateEventService {
       userId,
       postId,
     );
+    console.log(findEventOtherInSameDate);
 
-    if (findEventOtherInSameDate) {
+    if (findEventOtherInSameDate.length !== 0) {
       throw new AppError('This event is already booked');
     }
 

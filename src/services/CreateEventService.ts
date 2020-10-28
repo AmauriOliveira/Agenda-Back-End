@@ -25,7 +25,7 @@ class CreateEventService {
       userId,
     );
 
-    if (findEventInSameDate) {
+    if (findEventInSameDate.length !== 0) {
       throw new AppError('This event is already booked');
     }
 
