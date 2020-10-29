@@ -35,7 +35,7 @@ eventsRouter.get('/:id', async (request, response) => {
 });
 /// ////////////////////////////
 eventsRouter.post('/', async (request, response) => {
-  const { description, toDate, fromDate } = request.body;
+  const { name, description, toDate, fromDate } = request.body;
 
   const parsedFromDate = parseISO(fromDate);
   const parsedToDate = parseISO(toDate);
@@ -49,6 +49,7 @@ eventsRouter.post('/', async (request, response) => {
   const createEventService = new CreateEventService();
 
   const event = await createEventService.execute({
+    name,
     description,
     userId: request.user.id,
     fromDate: parsedFromDate,
@@ -60,7 +61,7 @@ eventsRouter.post('/', async (request, response) => {
 /// //////////////////////////
 eventsRouter.put('/:id', async (request, response) => {
   const { id } = request.params;
-  const { description, toDate, fromDate } = request.body;
+  const { name, description, toDate, fromDate } = request.body;
 
   const parsedFromDate = parseISO(fromDate);
   const parsedToDate = parseISO(toDate);
@@ -75,6 +76,7 @@ eventsRouter.put('/:id', async (request, response) => {
 
   const event = await updateEventService.execute({
     postId: id,
+    name,
     description,
     fromDate: parsedFromDate,
     toDate: parsedToDate,

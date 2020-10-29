@@ -13,6 +13,9 @@ export default class Event {
   id: number;
 
   @Column()
+  name: string;
+
+  @Column()
   description: string;
 
   @Column('time with time zone')

@@ -13,6 +13,11 @@ export default class CreateEvent1603735984049 implements MigrationInterface {
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
           },
+
+          {
+            name: 'name',
+            type: 'varchar',
+          },
           {
             name: 'description',
             type: 'text',

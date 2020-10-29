@@ -6,6 +6,7 @@ import AppError from '../errors/AppError';
 
 interface RequestDTO {
   postId: string;
+  name: string;
   description: string;
   userId: string;
   toDate: Date;
@@ -14,6 +15,7 @@ interface RequestDTO {
 
 class UpdateEventService {
   public async execute({
+    name,
     postId,
     description,
     fromDate,
@@ -39,10 +41,10 @@ class UpdateEventService {
     if (!event) {
       throw new AppError('This Event does not exist');
     }
-
+    event.name = name;
+    event.description = description;
     event.fromDate = fromDate;
     event.toDate = toDate;
-    event.description = description;
 
     await eventsRepository.save(event);
 

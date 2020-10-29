@@ -5,6 +5,7 @@ import EventsRepository from '../repositories/EventsRepository';
 import AppError from '../errors/AppError';
 
 interface RequestDTO {
+  name: string;
   description: string;
   userId: string;
   toDate: Date;
@@ -13,6 +14,7 @@ interface RequestDTO {
 
 class CreateEventService {
   public async execute({
+    name,
     description,
     userId,
     toDate,
@@ -30,6 +32,7 @@ class CreateEventService {
     }
 
     const event = eventsRepository.create({
+      name,
       description,
       userId,
       fromDate,
