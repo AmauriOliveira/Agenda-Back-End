@@ -15,7 +15,9 @@ eventsRouter.use(ensureAuthenticated);
 /// ////////////////////
 eventsRouter.get('/', async (request, response) => {
   const eventsRepository = getCustomRepository(EventsRepository);
-  const events = await eventsRepository.find({ userId: request.user.id });
+  const events = await eventsRepository.find({
+    where: { userId: request.user.id }, order: { fromDate: "ASC" }
+  });
 
   return response.json(events);
 });
